@@ -6,25 +6,14 @@ import CustomButton from '../components/CustomButton';
 import CustomImage from '../components/CustomImage';
 
 const Signin = (props) => {
-    const [user, setUser] = useState([]);
-    useEffect(() => {
-        GoogleSignin.configure();
-        //     webClientId: '643964762893-dc38d8c769tntqi7hg7ljf10s0amme1f.apps.googleusercontent.com',
-        // });
-        console.log("useEffect called")
-    }, []);
+    const [userProfile, setUserProfile] = useState(null);
 
-    const fetchData = () => {
-        // fetch()
-    }
     const handleGoogleSignin = async () => {
         try {
             await GoogleSignin.hasPlayServices();
             await GoogleSignin.signOut();
-            const userInfo = await GoogleSignin.signIn();
-            setUser(userInfo);   
-            console.log(user);
-            props.navigation.navigate("You", props)
+            let userInfo = await GoogleSignin.signIn();
+            setUserProfile(userInfo);        
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -38,6 +27,14 @@ const Signin = (props) => {
             alert("Failed")
         }
     };
+
+    useEffect(() => {
+        GoogleSignin.configure();
+        console.log("Signin Screen => ");
+        if(userProfile) {
+            props.navigation.navigate("BottomTabss", {userProfile})
+        }
+    }, [userProfile]);
     return (
         <View style={styles.container} >
             <CustomImage source={require("../assets/images/MultiClick.png")} />
@@ -58,7 +55,7 @@ const Signin = (props) => {
                 <View style={styles.btn} >
                     <CustomButton
                         text="Signin"
-                        onPress={() => alert(email)}
+                        onPress={() => console.log("userProfile => " + JSON.stringify(userProfile))}
                     />
                 </View>
             </View>
@@ -86,7 +83,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         // transform: [{ rotateY: '45deg' }]
     },
-
     title: {
         fontSize: 28,
         fontWeight: 'bold',
