@@ -21,11 +21,11 @@ const MainStack = () => {
           component={BottomTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="You"
           component={You}
           options={{ headerShown: false }}
-        />
+        /> */}
 
       </Stack.Navigator>
     </NavigationContainer>

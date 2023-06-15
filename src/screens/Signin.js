@@ -13,7 +13,7 @@ const Signin = (props) => {
             await GoogleSignin.hasPlayServices();
             await GoogleSignin.signOut();
             let userInfo = await GoogleSignin.signIn();
-            setUserProfile(userInfo);        
+            setUserProfile(userInfo);
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -31,14 +31,18 @@ const Signin = (props) => {
     useEffect(() => {
         GoogleSignin.configure();
         console.log("Signin Screen => ");
-        if(userProfile) {
-            props.navigation.navigate("BottomTabss", {userProfile})
+        if (userProfile) {
+            props.navigation.navigate("BottomTabs", { userProfile })
         }
     }, [userProfile]);
     return (
         <View style={styles.container} >
             <CustomImage source={require("../assets/images/MultiClick.png")} />
             <View style={styles.midContainer} >
+                <Image
+                    source={require('../assets/images/car.jpg') }
+                    style={{ position: 'absolute', width: 200, height: 200, borderRadius: 60, top: -80, justifyContent: 'center', alignSelf: 'center', }}
+                />
                 <Text style={styles.title} >
                     SIGN UP
                 </Text>
